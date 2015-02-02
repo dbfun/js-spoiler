@@ -2,20 +2,21 @@
 # Targets
 #
 
-.PHONY: all css
+.PHONY: all css download
 all: css
 
 #
 # CSS
 #
 
-CSS_OUT=css
-CSS_SRC=src-css
-CSS_SRC_FILES=$(shell find $(CSS_SRC) -type f -name '*.styl')
+CSS_SRC_FILES=$(shell find $(src-css) -type f -name '*.styl')
 
+css: css/spoiler.css
 
-css: css/plugin.css
+css/spoiler.css: src-css/js-spoiler.styl $(CSS_SRC_FILES)
+	cd src-css; cat js-spoiler.styl | stylus > ../css/spoiler.css
 
-$(CSS_OUT)/plugin.css: $(CSS_SRC)/plugin.styl $(CSS_SRC_FILES)
-	cd $(CSS_SRC); cat plugin.styl | stylus > ../$(CSS_OUT)/plugin.css
+download: download/spoiler.tar.gz
 
+download/spoiler.tar.gz: css
+	@echo TODO
